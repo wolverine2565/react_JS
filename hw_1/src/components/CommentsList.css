@@ -1,0 +1,11 @@
+.comment {
+    display: flex;
+    align-items: center;
+}
+
+.button {
+    margin: auto;
+    border: none;
+    background: none;
+}
+
