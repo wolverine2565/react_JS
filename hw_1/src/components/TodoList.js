@@ -1,30 +1,44 @@
-import { useState } from "react";
+import React, { useState } from 'react';
+import { TextField, Button, Card, CardContent, IconButton, Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function TodoList(params) {
-    const [inputText, setinputText] = useState('');
-    const [arr, setArr] = useState([]);
+const TodoList = () => {
+    const [tasks, setTasks] = useState([]);
+    const [taskText, setTaskText] = useState('');
 
+    const handleAddTask = () => {
+        if (taskText.trim() !== '') {
+            setTasks([...tasks, taskText]);
+            setTaskText('');
+        }
+    };
 
-function clickHandler() {
-    if (!inputText.trim()) {
-        return;
-    }
-    setArr([...arr, inputText]);
-    setinputText('');
-}
+    const handleDeleteTask = (index) => {
+        const updatedTasks = tasks.filter((_, i) => i !== index);
+        setTasks(updatedTasks);
+    };
 
-return (
-    <div>
-        <label htmlFor="input">Введите текст:</label>
-        <input 
-        onChange={(event) => setinputText(event.target.value)}
-        type="text"
-        id="input"
-        value={inputText}
-        maxLength={10}
-        ></input>
-        <button onClick={clickHandler}>Добавить</button>
-        <ul>{arr.map((item) => (<li key={arr.indexOf(item)}>{item}</li>))}</ul>
-    </div>
-)
-}
+    return (
+        <div>
+            <TextField
+                label="Новая задача"
+                value={taskText}
+                onChange={(e) => setTaskText(e.target.value)}
+            />
+            <Button onClick={handleAddTask}>Добавить задачу</Button>
+            {tasks.map((task, index) => (
+                <Card key={index} style={{ margin: '10px 0' }}>
+                    <CardContent>
+                        <Typography>{task}</Typography>
+                        <IconButton onClick={() => handleDeleteTask(index)}>
+                            <DeleteIcon />
+                        </IconButton>
+                    </CardContent>
+                </Card>
+            ))}
+        </div>
+    );
+};
+
+export default TodoList;
+
