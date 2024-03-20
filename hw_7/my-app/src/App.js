@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useContext } from 'react';
+import Main from './pages/mainPage';
+import Catalog from './pages/catalogPage';
+// import Product_page from './pages/productPage'
+import RegistrationPage from './pages/registrationPage'
+import CartPage from './pages/cartPage'
+import { cart } from "./bd/cart";
 
 function App() {
+
+  const valueCart = useContext(cart)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <cart.Provider value={valueCart}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/Catalog" element={<Catalog />} />
+          {/* <Route path="/Product" element={<ProductsPage />} /> */}
+          <Route path="/Registration" element={<RegistrationPage />} />
+          <Route path="/Cart" element={<CartPage />} />
+        </Routes>
+      </BrowserRouter>
+    </cart.Provider>
   );
 }
 
